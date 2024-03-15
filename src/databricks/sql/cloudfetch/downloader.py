@@ -6,7 +6,10 @@ import lz4.frame
 import threading
 import time
 
-from databricks.sql.thrift_api.TCLIService.ttypes import TSparkArrowResultLink
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from databricks.sql.thrift_api.TCLIService.ttypes import TSparkArrowResultLink
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +36,7 @@ class ResultSetDownloadHandler(threading.Thread):
     def __init__(
         self,
         downloadable_result_settings: DownloadableResultSettings,
-        t_spark_arrow_result_link: TSparkArrowResultLink,
+        t_spark_arrow_result_link: "TSparkArrowResultLink",
     ):
         super().__init__()
         self.settings = downloadable_result_settings
@@ -108,7 +111,7 @@ class ResultSetDownloadHandler(threading.Thread):
             )
             self.result_file = decompressed_data
 
-            # The size of the downloaded file should match the size specified from TSparkArrowResultLink
+            # The size of the downloaded file should match the size specified from "TSparkArrowResultLink"
             self.is_file_downloaded_successfully = (
                 len(self.result_file) == self.result_link.bytesNum
             )
@@ -132,7 +135,7 @@ class ResultSetDownloadHandler(threading.Thread):
 
     @staticmethod
     def check_link_expired(
-        link: TSparkArrowResultLink, expiry_buffer_secs: int
+        link: "TSparkArrowResultLink", expiry_buffer_secs: int
     ) -> bool:
         """
         Check if a link has expired or will expire.
