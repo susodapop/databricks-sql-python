@@ -1,5 +1,9 @@
 # Release History
 
+# x.x.x (TBD)
+
+- Fix slow imports when running tests with `coverage` enabled on Python 3.12
+
 # 3.1.0 (2024-02-16)
 
 - Revert retry-after behavior to be exponential backoff (#349)

@@ -1,8 +1,21 @@
 import unittest
 from unittest.mock import Mock, patch, MagicMock
-
+import time
 import databricks.sql.cloudfetch.downloader as downloader
 
+def test_downloader_import_time():
+    """It should take less than a second to import the downloader
+
+    When running tests with `pytest --cov`, this particular import took a long time (200+ seconds).
+
+    See #292 on Github.
+    """
+
+    start = time.time()
+    from databricks.sql.cloudfetch import downloader
+    end = time.time()
+    difference = end - start
+    assert difference < 1, f"It took {difference} seconds to import the downloader"
 
 class DownloaderTests(unittest.TestCase):
     """
